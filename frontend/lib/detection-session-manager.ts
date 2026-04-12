@@ -223,7 +223,8 @@ export async function runDetectionRequest(): Promise<boolean> {
       const payload = new FormData();
       payload.append("video", state.selectedFile as File);
 
-      const backendUrl = process.env.NEXT_PUBLIC_AED_MAE_BACKEND_URL || "/api/analyze";
+      const baseUrl = process.env.NEXT_PUBLIC_AED_MAE_BACKEND_URL;
+      const backendUrl = baseUrl ? `${baseUrl.replace(/\/$/, "")}/analyze` : "/api/analyze";
       const response = await fetch(backendUrl, {
         method: "POST",
         body: payload
